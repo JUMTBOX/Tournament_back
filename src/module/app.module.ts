@@ -4,6 +4,9 @@ import { AppService } from '../service/app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 
+import { TeamModule } from './team/team.module';
+import { TournamentModule } from './tournament/tournament.module';
+
 config();
 
 @Module({
@@ -11,9 +14,11 @@ config();
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DB_URL,
-      entities: [],
       synchronize: false,
+      autoLoadEntities: true,
     }),
+    TeamModule,
+    TournamentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

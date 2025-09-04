@@ -2,22 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { Team } from '../../entity/team/team.entity';
+import { TeamDto } from 'src/entity/team/team.dto';
 
 @Injectable()
 export class TeamService {
   constructor(@InjectRepository(Team) private repo: Repository<Team>) {}
 
-  create({
-    teamName,
-    teamDescription,
-    teamLogoUrl,
-    tournamentId,
-  }: Partial<Team>) {
+  createTeam({ teamName, teamDescription, logoUrl }: Partial<TeamDto>) {
     return this.repo.save({
-      teamName,
-      teamDescription,
-      teamLogoUrl,
-      tournamentId,
+      team_name: teamName,
+      team_description: teamDescription,
+      logo_url: logoUrl,
     });
   }
 
@@ -25,7 +20,7 @@ export class TeamService {
     return this.repo.find();
   }
 
-  findByTournament(tournamentId: FindOptionsWhere<Team>) {
-    return this.repo.findBy(tournamentId);
+  findBy(optionsWhere: FindOptionsWhere<Team>) {
+    return this.repo.findBy(optionsWhere);
   }
 }
