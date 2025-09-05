@@ -8,8 +8,18 @@ import { TeamDto } from 'src/entity/team/team.dto';
 export class TeamService {
   constructor(@InjectRepository(Team) private repo: Repository<Team>) {}
 
-  createTeam({ teamName, teamDescription, logoUrl }: Partial<TeamDto>) {
+  createTeam({
+    tournamentId,
+    divisionId,
+    groupId,
+    teamName,
+    teamDescription,
+    logoUrl,
+  }: Partial<TeamDto>) {
     return this.repo.save({
+      tournament_id: tournamentId,
+      division_id: divisionId,
+      group_id: groupId,
       team_name: teamName,
       team_description: teamDescription,
       logo_url: logoUrl,
